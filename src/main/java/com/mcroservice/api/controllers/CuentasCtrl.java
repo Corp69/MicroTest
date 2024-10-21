@@ -1,6 +1,9 @@
 package com.mcroservice.api.controllers;
 
 
+import com.sun.source.doctree.SummaryTree;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,12 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mcroservice.api.services.CuentasService;
 import com.mcroservice.api.req.CuentasVO;
+import com.mcroservice.api.responses.ApiResponse;
 import com.mcroservice.api.responses.CuentasAPagarResp;
 
 import java.util.List;
 
 @RequestMapping("/Cuentas")
 @RestController
+@Tag( name = "Micro-SERVICE -  Gestion cuentas" )
 public class CuentasCtrl {
 	
 	
@@ -26,10 +31,12 @@ public class CuentasCtrl {
         this.cuentasService = cuentasService;
     }
 
-	  @PostMapping("/getCuentas")
-	    public ResponseEntity<List<CuentasAPagarResp>> getCuentasAPagar(@RequestBody CuentasVO cuenta) {
-	        List<CuentasAPagarResp> cuentas = cuentasService.getCuentasPorPagar(cuenta.getTasaInteres(), cuenta.getDiasComercial());
-	        return ResponseEntity.ok(cuentas);
+	@Operation( summary = "Get cuentas activas")
+	@PostMapping("/getCuentas")
+		public ResponseEntity<ApiResponse<List<CuentasAPagarResp>>> getCuentasAPagar(@RequestBody CuentasVO cuenta) {
+		  List<CuentasAPagarResp> cuentas = cuentasService.getCuentasPorPagar(cuenta.getTasaInteres(), cuenta.getDiasComercial());
+		    ApiResponse<List<CuentasAPagarResp>> response = new ApiResponse<>(true, "Generación de datos correcta", cuentas);
+		    return ResponseEntity.ok(response);
 	    }
 	  
 }

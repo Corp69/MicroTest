@@ -30,15 +30,22 @@ public class SecurityConfiguration {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-    @Bean
+    @SuppressWarnings("removal")
+	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/auth/**")
-                .permitAll()
+        http.csrf().disable().authorizeHttpRequests().requestMatchers(
+                	"/doc/**",
+                	"/v3/**",
+                	"/v3/api-docs/**",
+                	"/v3/api-docs/swagger-config",
+                	"/doc/swagger-ui/index.html",
+                    "/auth/**", // Permitir acceso a rutas de autenticación
+                    "/swagger-ui/**", // Permitir acceso a la UI de Swagger
+                    "/swagger-resources/**" // Permitir acceso a los recursos de Swagger
+                )
+                .permitAll() // Permitir todas estas rutas sin autenticación
                 .anyRequest()
-                .authenticated()
+                .authenticated() // Requiere autenticación para cualquier otra solicitud
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

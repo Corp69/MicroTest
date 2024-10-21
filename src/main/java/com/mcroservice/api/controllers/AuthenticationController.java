@@ -1,6 +1,7 @@
 package com.mcroservice.api.controllers;
 
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +15,9 @@ import com.mcroservice.api.responses.LoginResponse;
 import com.mcroservice.api.services.AuthenticationService;
 import com.mcroservice.api.services.JwtService;
 
-
-
-
 @RequestMapping("/auth")
 @RestController
+@Tag( name = "Micro-SERVICE - Authenticacion Usuarios" )
 public class AuthenticationController {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
@@ -28,6 +27,7 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
+    @Operation( summary = "Signup/Registro: Almacenar Un usuario nuevo. ")
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
         User registeredUser = authenticationService.signup(registerUserDto);
@@ -35,7 +35,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(registeredUser);
     }
 
-    
+    @Operation( summary = "Login: Inicio de Sesion del usuario. ")
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);

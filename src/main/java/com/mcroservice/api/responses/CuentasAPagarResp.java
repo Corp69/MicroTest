@@ -30,7 +30,7 @@ public class CuentasAPagarResp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Integer id;
-	
+	private String Client ;
 	private Date fecha;
 	private Integer  plazo;
 	private Double amount;
@@ -38,6 +38,19 @@ public class CuentasAPagarResp {
 	private Double iva;
 	private Double pago;
 	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getClient() {
+		return Client;
+	}
+	public void setClient(String client) {
+		Client = client;
+	}
 	public Date getFecha() {
 		return fecha;
 	}
@@ -75,8 +88,5 @@ public class CuentasAPagarResp {
 		this.pago = pago;
 	}
 
-    
-	
-	
 	
 }

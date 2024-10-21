@@ -1,12 +1,12 @@
 # Etapa de construcción
-FROM eclipse-temurin:17-jdk AS build
+FROM eclipse-temurin:20-jdk AS build
 COPY pom.xml /app/
 COPY src /app/src/
 WORKDIR /app
 RUN mvn clean package -DskipTests
 
 # Etapa de ejecución
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:20-jre
 ARG PORT
 #Valor por defecto si no se establece PORT
 ENV PORT=${PORT}

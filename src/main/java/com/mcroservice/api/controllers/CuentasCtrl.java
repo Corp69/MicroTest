@@ -1,7 +1,6 @@
 package com.mcroservice.api.controllers;
 
 
-import com.sun.source.doctree.SummaryTree;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class CuentasCtrl {
 	@PostMapping("/getCuentas")
 		public ResponseEntity<ApiResponse<List<CuentasAPagarResp>>> getCuentasAPagar(@RequestBody CuentasVO cuenta) {
 		  List<CuentasAPagarResp> cuentas = cuentasService.getCuentasPorPagar(cuenta.getTasaInteres(), cuenta.getDiasComercial());
-		    ApiResponse<List<CuentasAPagarResp>> response = new ApiResponse<>(true, "Generación de datos correcta", cuentas);
+		    ApiResponse<List<CuentasAPagarResp>> response = new ApiResponse<>(true, "Obtencion de datos correctamente", cuentas);
 		    return ResponseEntity.ok(response);
 	    }
 	  
